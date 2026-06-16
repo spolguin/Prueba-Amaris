@@ -1,0 +1,27 @@
+     //Ejercicio 1.3
+describe('IMDb Top 250 TV Shows - Danny Trejo Photos', () => {
+  ['chrome', 'firefox'].forEach((browser) => {
+    it(`Validar flujo en ${browser}`, { browser }, () => {
+      cy.visit('https://www.imdb.com');
+
+      // 1. Desplegar Menú y navegar a Top 250 TV Shows
+      cy.get('#imdbHeader-navDrawerOpen').click();
+      cy.contains('Top 250 TV Shows').click();
+
+      // 2. Clic en Breaking Bad
+      cy.contains('Breaking Bad').click();
+
+      // 3. Ir a Fotos
+      cy.contains('Photos').click();
+
+      // 4. Filtrar por Danny Trejo
+      cy.contains('Danny Trejo').click();
+
+      // 5. Clic en la segunda foto
+      cy.get('.media_index_thumb_list a').eq(1).click();
+
+      // Validación
+      cy.url().should('include', 'mediaviewer');
+    });
+  });
+});
