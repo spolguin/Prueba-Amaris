@@ -1,0 +1,23 @@
+   //Ejercicio 2-4
+describe('Berry Flavor API - Spicy', () => {
+  it('Seleccionar berry con mayor potencia y validar detalle', () => {
+    cy.request('https://pokeapi.co/api/v2/berry-flavor/spicy/').then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.name).to.eq('spicy');
+
+      // Encontrar berry con mayor potencia
+      const berries = response.body.berries;
+      const maxBerry = berries.reduce((prev, current) => {
+        return (current.potency > prev.potency) ? current : prev;
+      });
+
+      cy.log(`Berry con mayor potencia: ${maxBerry.berry.name}`);
+
+      // Llamar al endpoint berry/{nombre}
+      cy.request(`https://pokeapi.co/api/v2/berry/${maxBerry.berry.name}/`).then((berryResponse) => {
+        expect(berryResponse.status).to.eq(200);
+        expect(berryResponse.body.name).to.eq(maxBerry.berry.name);
+      });
+    });
+  });
+});
