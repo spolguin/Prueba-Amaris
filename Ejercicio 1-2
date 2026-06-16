@@ -1,0 +1,30 @@
+
+      //Ejercicio 1.2
+describe('IMDb Top Box Office Rating Flow', () => {
+  ['chrome', 'firefox'].forEach((browser) => {
+    it(`Validar flujo en ${browser}`, { browser }, () => {
+      cy.visit('https://www.imdb.com');
+
+      // 1. Desplegar menú y navegar a Top Box Office
+      cy.get('#imdbHeader-navDrawerOpen').click();
+      cy.contains('Top Box Office').click();
+
+      // 2. Clic en el segundo elemento
+      cy.get('.ipc-metadata-list-summary-item').eq(1).click();
+
+      // 3. Clic en IMDb Rating
+      cy.contains('IMDb Rating').click();
+
+      // 4. Clic en Rate
+      cy.contains('Rate').click();
+
+      // 5. Seleccionar 5 estrellas
+      cy.get('button[aria-label="Rate 5"]').click();
+
+      // 6. Confirmar en ventana emergente
+      cy.contains('Rate').click();
+
+      // Validación
+      cy.contains('Your rating').should('be.visible');
+    });
+  });
