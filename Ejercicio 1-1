@@ -1,0 +1,25 @@
+      //Ejercicio 1.1
+describe('IMDb Nicolas Cage Upcoming Releases', () => {
+  ['chrome', 'firefox'].forEach((browser) => {
+    it(`Validar flujo en ${browser}`, { browser }, () => {
+      cy.visit('https://www.imdb.com');
+
+      // Buscar Nicolas Cage
+      cy.get('input[name="q"]').type('Nicolas Cage{enter}');
+      cy.contains('Nicolas Cage').click();
+
+      // Ir a sección Créditos > Próximos estrenos
+      cy.contains('Créditos').click();
+      cy.contains('Próximamente').click();
+
+      // Clic en primera película con etiqueta "Completada"
+      cy.get('.ipc-metadata-list-summary-item:contains("Completada")')
+        .first()
+        .find('a')
+        .click();
+
+      // Validación: URL contiene /title/
+      cy.url().should('include', '/title/');
+    });
+  });
+});
