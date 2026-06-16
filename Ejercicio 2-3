@@ -1,0 +1,11 @@
+   //Ejercicio 2-3
+describe('Berry Flavor API', () => {
+  it('Nombre válido devuelve flavor spicy', () => {
+    cy.request('https://pokeapi.co/api/v2/berry-flavor/spicy/').then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.name).to.eq('spicy');
+      expect(response.body.berries).to.have.length.greaterThan(0);
+    });
+  });
+});
+
