@@ -1,0 +1,39 @@
+     //Ejercicio 1.5
+describe('IMDb Born Today - Celebrities born 40 years ago', () => {
+  ['chrome', 'firefox'].forEach((browser) => {
+    it(`Validar flujo en ${browser}`, { browser }, () => {
+      cy.visit('https://www.imdb.com');
+
+      // 1. Desplegar Menú y navegar a Born Today
+      cy.get('#imdbHeader-navDrawerOpen').click();
+      cy.contains('Born Today').click();
+
+      // 2. Borrar búsqueda predeterminada
+      cy.get('input[name="q"]').clear();
+
+      // 3. Desplegar Date of Birth
+      cy.contains('Date of Birth').click();
+
+      // 4. Calcular fecha de hoy - 40 años
+      const today = new Date();
+      const fortyYearsAgo = new Date(today.getFullYear() - 40, today.getMonth(), today.getDate());
+      const yyyy = fortyYearsAgo.getFullYear();
+      const mm = String(fortyYearsAgo.getMonth() + 1).padStart(2, '0');
+      const dd = String(fortyYearsAgo.getDate()).padStart(2, '0');
+      const dateStr = `${yyyy}-${mm}-${dd}`;
+
+      // 5. Usar selector "desde" y campo "hasta"
+      cy.get('input[name="birth_date-min"]').type(dateStr);
+      cy.get('input[name="birth_date-max"]').type(dateStr);
+      cy.get('input[name="birth_date-max"]').type('{enter}');
+
+      // 6. Clic en el primer resultado y primer enlace en la descripción
+      cy.get('.ipc-metadata-list-summary-item').first().within(() => {
+        cy.get('a').first().click();
+      });
+
+      // 7. Captura de pantalla
+      cy.screenshot('celebrity_40yearsago');
+    });
+  });
+});
