@@ -1,0 +1,19 @@
+   //Ejercicio 2-1
+describe('Berry API - Validaciones', () => {
+  it('ID válido devuelve berry', () => {
+    cy.request('https://pokeapi.co/api/v2/berry/1/').then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.name).to.eq('cheri');
+    });
+  });
+
+  it('ID no válido devuelve error', () => {
+    cy.request({
+      url: 'https://pokeapi.co/api/v2/berry/9999/',
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.eq(404);
+    });
+  });
+});
+    
