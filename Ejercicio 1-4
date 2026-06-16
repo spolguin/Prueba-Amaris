@@ -1,0 +1,26 @@
+      //Ejercicio 1.4
+describe('IMDb Born Today - Celebrities born yesterday', () => {
+  ['chrome', 'firefox'].forEach((browser) => {
+    it(`Validar flujo en ${browser}`, { browser }, () => {
+      cy.visit('https://www.imdb.com');
+
+      // 1. Desplegar Menú y navegar a Born Today
+      cy.get('#imdbHeader-navDrawerOpen').click();
+      cy.contains('Born Today').click();
+
+      // 2. Borrar búsqueda predeterminada
+      cy.get('input[name="q"]').clear();
+
+      // 3. Desplegar Cumpleaños y seleccionar Yesterday
+      cy.contains('Birthdays').click();
+      cy.contains('Yesterday').click();
+
+      // 4. Clic en el tercer nombre de la lista
+      cy.get('.ipc-metadata-list-summary-item').eq(2).click();
+
+      // 5. Tomar captura de pantalla
+      cy.screenshot('celebrity_yesterday');
+    });
+  });
+});
+      
