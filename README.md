@@ -1,4 +1,4 @@
-Archivo Jenkinsfile para incorporar testing en todo el ciclo de vida del proyecto.
+Archivo Jenkinsfile para incorporar testing contínuo en CI/CD.
 Todos los tests están desarrollados para Cypress.
 Sólo me fue posible habilitar las pruebas para firefox al parecer es por mi equipo pues no pude determinar por qué razón en Chrome no levantaba.
 En el caso de los ejercicios 1-1 al 1.5 las aserciones no estaban correctas quizás por el idioma del navegador, no tuve tiempo para analizar las causas precisas.
